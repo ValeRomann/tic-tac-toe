@@ -33,10 +33,10 @@ const Gameboard = function() {
   function putSign(id) {
     if (gameBoardArr[id] === '') {    
       gameBoardArr[id] = showCurrentSign();
-      changeCurrentSign();
       renderBoard();
       checkWin(currentSign);
-      console.log(checkWin(currentSign), currentSign);
+      console.log(checkWin(currentSign), currentSign);      
+      changeCurrentSign();
     }
   }
 
