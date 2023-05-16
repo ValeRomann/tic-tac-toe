@@ -1,8 +1,10 @@
 const Gameboard = function() {
+  const RESET_BUTTON = document.querySelector('#resetButton')
   let currentSign = 'X';
+
   function changeCurrentSign() {
     if (currentSign === 'X') currentSign = 'O';
-    if (currentSign === 'O') currentSign = 'X';
+    else currentSign = 'X';
   }
   function showCurrentSign(){
     return currentSign;
@@ -33,6 +35,16 @@ const Gameboard = function() {
       renderBoard();
     }
   }
+
+  function resetGame() {
+    for (let i = 0; i < gameBoardArr.length; i++) {
+      gameBoardArr[i] = '';
+    }
+    currentSign = 'X';
+    renderBoard();
+  }
+
+  RESET_BUTTON.onclick = resetGame;
 
   return {
     renderBoard
