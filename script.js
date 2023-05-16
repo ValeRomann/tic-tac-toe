@@ -1,4 +1,6 @@
 const Gameboard = function() {
+  const DISPLAY = document.querySelector('#display');
+  DISPLAY.innerText = 'kek';
   const RESET_BUTTON = document.querySelector('#resetButton')
   let currentSign = 'X';
 
@@ -10,7 +12,7 @@ const Gameboard = function() {
     return currentSign;
   }
 
-  const gameBoardArr =  ['','','','','','','','',''];
+  let gameBoardArr =  ['','','','','','','','',''];
 
   const renderBoard = function() {
     const BOARD = document.querySelector('#gamePad');
@@ -33,18 +35,55 @@ const Gameboard = function() {
       gameBoardArr[id] = showCurrentSign();
       changeCurrentSign();
       renderBoard();
+      checkWin(currentSign);
+      console.log(checkWin(currentSign), currentSign);
     }
   }
 
   function resetGame() {
-    for (let i = 0; i < gameBoardArr.length; i++) {
-      gameBoardArr[i] = '';
-    }
+    gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
     renderBoard();
   }
 
   RESET_BUTTON.onclick = resetGame;
+
+  function checkWin(currentSign) {
+    if (
+        (currentSign === gameBoardArr[0] &&
+        currentSign === gameBoardArr[1] &&
+        currentSign === gameBoardArr[2])
+        || 
+        (currentSign === gameBoardArr[3] &&
+        currentSign === gameBoardArr[4] &&
+        currentSign === gameBoardArr[5])
+        ||
+        (currentSign === gameBoardArr[6] &&
+        currentSign === gameBoardArr[7] &&
+        currentSign === gameBoardArr[8])
+        ||
+        (currentSign === gameBoardArr[0] &&
+        currentSign === gameBoardArr[3] &&
+        currentSign === gameBoardArr[6])
+        ||
+        (currentSign === gameBoardArr[1] &&
+        currentSign === gameBoardArr[4] &&
+        currentSign === gameBoardArr[7])
+        ||
+        (currentSign === gameBoardArr[2] &&
+        currentSign === gameBoardArr[5] &&
+        currentSign === gameBoardArr[8])
+        ||
+        (currentSign === gameBoardArr[0] &&
+        currentSign === gameBoardArr[4] &&
+        currentSign === gameBoardArr[8])
+        ||
+        (currentSign === gameBoardArr[2] &&
+        currentSign === gameBoardArr[4] &&
+        currentSign === gameBoardArr[6])
+      ) return true;
+      return false
+  }
 
   return {
     renderBoard
