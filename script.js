@@ -1,6 +1,6 @@
 const Gameboard = function() {
   const DISPLAY = document.querySelector('#display');
-  DISPLAY.innerText = 'kek';
+  DISPLAY.innerText = 'Welcome!';
   const RESET_BUTTON = document.querySelector('#resetButton')
   let currentSign = 'X';
 
@@ -31,11 +31,14 @@ const Gameboard = function() {
   };
 
   function putSign(id) {
+    if (checkWin(currentSign)) return;
     if (gameBoardArr[id] === '') {    
       gameBoardArr[id] = showCurrentSign();
       renderBoard();
-      checkWin(currentSign);
-      console.log(checkWin(currentSign), currentSign);      
+      if (checkWin(currentSign)) {
+        DISPLAY.innerText = `Winner is ${showCurrentSign()}`;
+        return;
+      }
       changeCurrentSign();
     }
   }
@@ -43,6 +46,7 @@ const Gameboard = function() {
   function resetGame() {
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
+    DISPLAY.innerText = `Welcome!`;
     renderBoard();
   }
 
