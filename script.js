@@ -1,6 +1,7 @@
 const Gameboard = function() {
   const DISPLAY = document.querySelector('#display');
   DISPLAY.innerText = 'Welcome!';
+
   const RESET_BUTTON = document.querySelector('#resetButton')
   let currentSign = 'X';
 
@@ -8,11 +9,15 @@ const Gameboard = function() {
     if (currentSign === 'X') currentSign = 'O';
     else currentSign = 'X';
   }
-  function showCurrentSign(){
+  function showCurrentSign() {
     return currentSign;
   }
 
   let gameBoardArr =  ['','','','','','','','',''];
+
+  let checkArr = function(arr) {    
+    return arr.includes('');
+  };
 
   const renderBoard = function() {
     const BOARD = document.querySelector('#gamePad');
@@ -31,14 +36,11 @@ const Gameboard = function() {
   };
 
   function putSign(id) {
-    if (checkWin(currentSign)) return;
     if (gameBoardArr[id] === '') {    
       gameBoardArr[id] = showCurrentSign();
       renderBoard();
-      if (checkWin(currentSign)) {
-        DISPLAY.innerText = `Winner is ${showCurrentSign()}`;
-        return;
-      }
+      if (checkWin(currentSign)) DISPLAY.innerText = `Winner is ${showCurrentSign()}`;
+      if (!gameBoardArr.includes('')) DISPLAY.innerText = `it's a Draw!`;
       changeCurrentSign();
     }
   }
@@ -46,14 +48,14 @@ const Gameboard = function() {
   function resetGame() {
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
-    DISPLAY.innerText = `Welcome!`;
+    DISPLAY.innerText = 'Welcome!';
     renderBoard();
   }
 
   RESET_BUTTON.onclick = resetGame;
 
   function checkWin(currentSign) {
-    if (
+    return (
         (currentSign === gameBoardArr[0] &&
         currentSign === gameBoardArr[1] &&
         currentSign === gameBoardArr[2])
@@ -85,8 +87,7 @@ const Gameboard = function() {
         (currentSign === gameBoardArr[2] &&
         currentSign === gameBoardArr[4] &&
         currentSign === gameBoardArr[6])
-      ) return true;
-      return false
+      );
   }
 
   return {
