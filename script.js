@@ -40,7 +40,7 @@ const Gameboard = function() {
       gameBoardArr[id] = showCurrentSign();
       renderBoard();
       if (checkWin(currentSign)) DISPLAY.innerText = `Winner is ${showCurrentSign()}`;
-      if (!gameBoardArr.includes('')) DISPLAY.innerText = `it's a Draw!`;
+      if (!gameBoardArr.includes('')) DISPLAY.innerText = `It's a Draw!`;
       changeCurrentSign();
     }
   }
