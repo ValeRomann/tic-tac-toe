@@ -45,6 +45,40 @@ const Gameboard = function() {
 
   let currentSign = 'X';
   let currentPlayer;
+  
+  makeUnavailableColor(RESET_BUTTON);
+
+  function makeUnavailableColor(elem) {
+    elem.style.color = 'lightgray';
+    elem.onmouseover = function(e) {
+      e.target.style.backgroundColor = 'white';
+    }
+    elem.onmouseleave = function(e) {
+      e.target.style.backgroundColor = 'white';
+    }
+    elem.onmousedown = function(e) {
+      e.target.style.backgroundColor = 'white';
+    }
+    elem.onmouseup = function(e) {
+      e.target.style.backgroundColor = 'white';
+    }
+  }
+
+  function makeAvailableColor(elem) {
+    elem.style.color = 'black';
+    elem.onmouseover = function(e) {
+      e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+    }
+    elem.onmouseleave = function(e) {
+      e.target.style.backgroundColor = 'white';
+    }
+    elem.onmousedown = function(e) {
+      e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    }
+    elem.onmouseup = function(e) {
+      e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+    }
+  }
 
   SUBMIT_PLAYERS_NAME.onclick = function(e) {
     e.preventDefault();
@@ -54,6 +88,7 @@ const Gameboard = function() {
       return;
     }
     GAMEPAD.style.backgroundColor = 'rgb(146, 146, 146)';
+    makeAvailableColor(RESET_BUTTON);
     player1 = document.getElementById('playerName1').value;
     player2 = document.getElementById('playerName2').value;
     currentPlayer = player1;
@@ -115,6 +150,7 @@ const Gameboard = function() {
   }
 
   RESET_BUTTON.onclick  = function() {
+    if (INPUT_PLAYERS_FORM.className !== 'hidden') return;
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
     currentPlayer = player1;
@@ -123,6 +159,7 @@ const Gameboard = function() {
   }
 
   NEW_GAME_BUTTON.onclick = function() {
+    makeUnavailableColor(RESET_BUTTON);
     player1 = '';
     player2 = '';
     document.getElementById('playerName1').value = '';
