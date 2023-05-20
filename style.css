@@ -14,12 +14,42 @@ body {
   gap:12px;
 }
 
-#gameBoard, #controlPanel {
+h1 {
+  font-size: 40px;
+}
+
+#gameBoard, #controlPanel, #inputForm {
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   align-items: flex-start;
+}
+
+#inputForm.hidden {
+  display: none;
+}
+
+.userInput {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.userInput input {
+  width: 100%;
+  padding: 5px;
+  font-size: 14px;
+}
+
+.error {
+  position: absolute;
+  top: 8px;
+  right: 0;
+  font-size: 0.75em;
+  color: red;
 }
 
 #display {
@@ -37,7 +67,7 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 3px;
-  background-color: rgb(146, 146, 146);;
+  background-color: rgb(146, 146, 146);
 }
 
 #gamePad > div {
@@ -50,6 +80,9 @@ body {
   min-height: 50px;
 }
 
+#submitPlayerName {
+  align-self: end;
+}
 
 #buttonsPanel button, #submitPlayerName {
   /* width: 50%; */
