@@ -143,7 +143,10 @@ const Gameboard = function() {
         DISPLAY.innerText = `Winner is ${currentPlayer}!`;
         return;
       }
-      if (!gameBoardArr.includes('')) DISPLAY.innerText = `It's a Draw!`;
+      if (!gameBoardArr.includes('')) {
+        DISPLAY.innerText = `It's a Draw!`;
+        return;
+      }
       changeCurrentSign();
       DISPLAY.innerText = `${currentPlayer}'s Move!`;
     }
