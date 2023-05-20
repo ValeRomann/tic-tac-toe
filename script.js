@@ -117,6 +117,7 @@ const Gameboard = function() {
   RESET_BUTTON.onclick  = function() {
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
+    currentPlayer = player1;
     DISPLAY.innerText = `${currentPlayer}'s Move!`;
     renderBoard();
   }
