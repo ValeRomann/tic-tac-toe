@@ -8,28 +8,23 @@ const Gameboard = function() {
 
 
   INPUT_PLAYER1.onchange = function (e) {
-    if (e.target.value.length < 6) {
-      ERROR_MESSAGE[0].innerText = 'Name must be at least 6 characters';
-      return false;
-    }
-    if (e.target.value.length > 20) {
-      ERROR_MESSAGE[0].innerText = 'Name must not be more than 20 characters';
-      return false;
-    }
-    ERROR_MESSAGE[0].innerText = '';
-    return true;
+    showErrorMessage(e.target.value.length, ERROR_MESSAGE[0]);    
   }
 
   INPUT_PLAYER2.onchange = function (e) {
-    if (e.target.value.length < 6) {
-      ERROR_MESSAGE[1].innerText = 'Name must be at least 6 characters';
+    showErrorMessage(e.target.value.length, ERROR_MESSAGE[1]);    
+  }
+
+  function showErrorMessage(length, elem) {
+    if (length < 6) {
+      elem.innerText = 'Name must be at least 6 characters';
       return false;
     }
-    if (e.target.value.length > 20) {
-      ERROR_MESSAGE[1].innerText = 'Name must not be more than 20 characters';
-      return false;
+    if (length > 20) {
+      elem.innerText = 'Name must not be more than 20 characters';   
+      return false;   
     }
-    ERROR_MESSAGE[1].innerText = '';
+    elem.innerText = '';
     return true;
   }
 
@@ -80,11 +75,23 @@ const Gameboard = function() {
     }
   }
 
+
   SUBMIT_PLAYERS_NAME.onclick = function(e) {
     e.preventDefault();
-    if (INPUT_PLAYER1.value.length < 6 && INPUT_PLAYER1.value.length < 20) {
-      ERROR_MESSAGE[0].innerText = 'Name must be at least 6 characters';
-      ERROR_MESSAGE[1].innerText = 'Name must be at least 6 characters';
+    if (INPUT_PLAYER1.value.length < 6) {
+      showErrorMessage(INPUT_PLAYER1.value.length, ERROR_MESSAGE[0]);
+      return;
+    }
+    if (INPUT_PLAYER2.value.length < 6) {
+      showErrorMessage(INPUT_PLAYER2.value.length, ERROR_MESSAGE[1]);
+      return;
+    }
+    if (INPUT_PLAYER1.value.length > 20) {
+      showErrorMessage(INPUT_PLAYER1.value.length, ERROR_MESSAGE[0]);
+      return;
+    }
+    if (INPUT_PLAYER1.value.length > 20) {
+      showErrorMessage(INPUT_PLAYE2.value.length, ERROR_MESSAGE[1]);
       return;
     }
     GAMEPAD.style.backgroundColor = 'rgb(146, 146, 146)';
