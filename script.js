@@ -78,20 +78,12 @@ const Gameboard = function() {
 
   SUBMIT_PLAYERS_NAME.onclick = function(e) {
     e.preventDefault();
-    if (INPUT_PLAYER1.value.length < 6) {
+    if (INPUT_PLAYER1.value.length < 6 ||
+      INPUT_PLAYER2.value.length < 6 ||
+      INPUT_PLAYER1.value.length > 20 ||
+      INPUT_PLAYER1.value.length > 20) {
       showErrorMessage(INPUT_PLAYER1.value.length, ERROR_MESSAGE[0]);
-      return;
-    }
-    if (INPUT_PLAYER2.value.length < 6) {
       showErrorMessage(INPUT_PLAYER2.value.length, ERROR_MESSAGE[1]);
-      return;
-    }
-    if (INPUT_PLAYER1.value.length > 20) {
-      showErrorMessage(INPUT_PLAYER1.value.length, ERROR_MESSAGE[0]);
-      return;
-    }
-    if (INPUT_PLAYER1.value.length > 20) {
-      showErrorMessage(INPUT_PLAYE2.value.length, ERROR_MESSAGE[1]);
       return;
     }
     GAMEPAD.style.backgroundColor = 'rgb(146, 146, 146)';
