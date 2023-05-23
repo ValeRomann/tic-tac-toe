@@ -1,60 +1,124 @@
-const Gameboard = function() {
+const Gameboard = function() {  
   const INPUT_PLAYERS_FORM = document.getElementById('inputForm');
   const PLAY_MODE_LABELS = document.querySelectorAll('.playMode label');
   const PLAY_MODE_RADIOS = document.querySelectorAll('.playMode input[type="radio"]');
-  const INPUT_PLAYER1 = document.getElementById('playerName1');
-  const INPUT_PLAYER2 = document.getElementById('playerName2');
-  const ERROR_MESSAGE = document.querySelectorAll('.error');
   const GAMEPAD = document.getElementById('gamePad');
-  GAMEPAD.style.backgroundColor = 'lightgray';
-
+  GAMEPAD.style.backgroundColor = 'lightgray'; 
+  let currentMode;
+  let currentSign = 'X';
+  let currentPlayer;
 
   const stylePlayModeRadio = function() {    
     for (let i = 0; i < PLAY_MODE_LABELS.length; i++) {
-      if (PLAY_MODE_RADIOS[i].checked) PLAY_MODE_LABELS[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+      if (PLAY_MODE_RADIOS[i].checked) PLAY_MODE_LABELS[i].className = 'active';
       PLAY_MODE_LABELS[i].onclick = function() {
-        PLAY_MODE_LABELS[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+        PLAY_MODE_LABELS[i].className = 'active';
         for (let j = 0; j < PLAY_MODE_RADIOS.length; j++) {
-          if (!PLAY_MODE_RADIOS[j].checked) PLAY_MODE_LABELS[j].style.backgroundColor = 'white';
+          if (!PLAY_MODE_RADIOS[j].checked) PLAY_MODE_LABELS[j].className = 'normal';
         }
       };
     }
   }();
 
-  INPUT_PLAYER1.oninput = function (e) {
-    showErrorMessage(e.target.value.length, ERROR_MESSAGE[0]);    
-  }
+  const runTwoPlayersMode = function() {
+    const SUBMIT_PLAYERS_NAME = document.querySelector('#submitPlayerName');
+    const INPUT_PLAYER1 = document.getElementById('playerName1');
+    const INPUT_PLAYER2 = document.getElementById('playerName2');
+    const ERROR_MESSAGE = document.querySelectorAll('.error');
+    let player1;
+    let player2;
 
-  INPUT_PLAYER2.oninput = function (e) {
-    showErrorMessage(e.target.value.length, ERROR_MESSAGE[1]);    
-  }
-
-  function showErrorMessage(length, elem) {
-    if (length < 6) {
-      elem.innerText = 'Name must be at least 6 characters';
-      return false;
+    INPUT_PLAYER1.oninput = function (e) {
+      showErrorMessage(e.target.value.length, ERROR_MESSAGE[0]);    
     }
-    if (length > 20) {
-      elem.innerText = 'Name must not be more than 20 characters';   
-      return false;   
+  
+    INPUT_PLAYER2.oninput = function (e) {
+      showErrorMessage(e.target.value.length, ERROR_MESSAGE[1]);    
     }
-    elem.innerText = '';
-    return true;
+  
+    function showErrorMessage(length, elem) {
+      if (length < 6) {
+        elem.innerText = 'Name must be at least 6 characters';
+        return false;
+      }
+      if (length > 20) {
+        elem.innerText = 'Name must not be more than 20 characters';   
+        return false;   
+      }
+      elem.innerText = '';
+      return true;
+    }
+
+    function getPlayer1Name() {
+      return player1;
+    }
+
+    function getPlayer2Name() {
+      return player2;
+    }
+
+    SUBMIT_PLAYERS_NAME.onclick = function(e) {
+      e.preventDefault();
+      if (INPUT_PLAYER1.value.length < 6 ||
+        INPUT_PLAYER2.value.length < 6 ||
+        INPUT_PLAYER1.value.length > 20 || INPUT_PLAYER1.value.length > 20) {
+        showErrorMessage(INPUT_PLAYER1.value.length, ERROR_MESSAGE[0]);
+        showErrorMessage(INPUT_PLAYER2.value.length, ERROR_MESSAGE[1]);
+        return;
+      }
+      GAMEPAD.style.backgroundColor = 'rgb(146, 146, 146)';
+      makeAvailableColor(RESET_BUTTON);
+      player1 = document.getElementById('playerName1').value;
+      player2 = document.getElementById('playerName2').value;
+      currentPlayer = player1;
+      DISPLAY.innerText = `${currentPlayer}'s Move!`;
+      INPUT_PLAYERS_FORM.className = 'hidden';
+    };
+
+    return {
+      getPlayer1Name,
+      getPlayer2Name
+    }
+  };
+
+  const runRandomMode = function() {
+
+  };
+
+  const runAIMode = function() {
+
   }
 
-  let player1;
-  let player2;
 
+  const chooseMode = function() {
+      if (PLAY_MODE_RADIOS[0].checked) {
+        document.querySelector('.nameInputs').className = 'nameInputs';
+        currentMode = runTwoPlayersMode();
+        return {
+          currentMode
+        }
+      }
+      if (PLAY_MODE_RADIOS[1].checked) {
+        document.querySelector('.nameInputs').className += ' hidden';
+        runRandomMode();
+        return;
+      }
+      if (PLAY_MODE_RADIOS[2].checked) {
+        document.querySelector('.nameInputs').className += ' hidden';
+        runAIMode();
+        return;
+      }
+  };
+  
+  PLAY_MODE_RADIOS[0].onclick = chooseMode;
+  PLAY_MODE_RADIOS[1].onclick = chooseMode;
+  PLAY_MODE_RADIOS[2].onclick = chooseMode;
+  
   const DISPLAY = document.querySelector('#display');
   DISPLAY.innerText = 'Welcome!';
-
-  const SUBMIT_PLAYERS_NAME = document.querySelector('#submitPlayerName');
+  
   const RESET_BUTTON = document.querySelector('#resetButton');
   const NEW_GAME_BUTTON = document.querySelector('#newGameButton');
-
-  let currentSign = 'X';
-  let currentPlayer;
-  const playMode = ['2 Players', 'Random Mode', 'AI Mode'];
   
   makeUnavailableColor(RESET_BUTTON);
 
@@ -88,34 +152,15 @@ const Gameboard = function() {
     elem.onmouseup = function(e) {
       e.target.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
     }
-  }
-
-
-  SUBMIT_PLAYERS_NAME.onclick = function(e) {
-    e.preventDefault();
-    if (INPUT_PLAYER1.value.length < 6 ||
-      INPUT_PLAYER2.value.length < 6 ||
-      INPUT_PLAYER1.value.length > 20 || INPUT_PLAYER1.value.length > 20) {
-      showErrorMessage(INPUT_PLAYER1.value.length, ERROR_MESSAGE[0]);
-      showErrorMessage(INPUT_PLAYER2.value.length, ERROR_MESSAGE[1]);
-      return;
-    }
-    GAMEPAD.style.backgroundColor = 'rgb(146, 146, 146)';
-    makeAvailableColor(RESET_BUTTON);
-    player1 = document.getElementById('playerName1').value;
-    player2 = document.getElementById('playerName2').value;
-    currentPlayer = player1;
-    DISPLAY.innerText = `${currentPlayer}'s Move!`;
-    INPUT_PLAYERS_FORM.className = 'hidden';
-  };  
+  }  
   
   function changeCurrentSign() {
     if (currentSign === 'X') {
       currentSign = 'O';
-      currentPlayer = player2;
+      currentPlayer = currentMode.getPlayer2Name();
     } else {
       currentSign = 'X';
-      currentPlayer = player1;
+      currentPlayer = currentMode.getPlayer1Name();
     }
   }
 
@@ -174,7 +219,7 @@ const Gameboard = function() {
     if (INPUT_PLAYERS_FORM.className !== 'hidden') return;
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
-    currentPlayer = player1;
+    currentPlayer = currentMode.getPlayer1Name();
     DISPLAY.innerText = `${currentPlayer}'s Move!`;
     renderBoard();
   }

@@ -18,7 +18,7 @@ h1 {
   font-size: 40px;
 }
 
-#gameBoard, #controlPanel, #inputForm {
+#gameBoard, #controlPanel, #inputForm, .nameInputs {
   min-width: 300px;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,8 @@ h1 {
   align-items: flex-start;
 }
 
-#inputForm.hidden {
+#inputForm.hidden,
+.nameInputs.hidden {
   display: none;
 }
 
@@ -54,6 +55,8 @@ h1 {
 .playMode label:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
+
+
 
 .userInput {
   width: 100%;
@@ -122,5 +125,17 @@ h1 {
 }
 
 #buttonsPanel button:active, #submitPlayerName:active {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.normal {
+  background-color: #fff;
+}
+
+.hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.active {
   background-color: rgba(0, 0, 0, 0.1);
 }
