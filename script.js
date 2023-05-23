@@ -1,5 +1,19 @@
 const Gameboard = function() {
   const INPUT_PLAYERS_FORM = document.getElementById('inputForm');
+  const PLAY_MODE_LABELS = document.querySelectorAll('.playMode label');
+  const PLAY_MODE_RADIOS = document.querySelectorAll('.playMode input[type="radio"]');
+
+  const stylePlayModeRadio = function() {
+    for (let i = 0; i < PLAY_MODE_LABELS.length; i++) {
+      PLAY_MODE_LABELS[i].onclick = function() {
+        PLAY_MODE_LABELS[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+        for (let j = 0; j < PLAY_MODE_RADIOS.length; j++) {
+          if (!PLAY_MODE_RADIOS[j].checked) PLAY_MODE_LABELS[j].style.backgroundColor = 'white';
+        }
+      };
+    }
+  }();
+  
   const INPUT_PLAYER1 = document.getElementById('playerName1');
   const INPUT_PLAYER2 = document.getElementById('playerName2');
   const ERROR_MESSAGE = document.querySelectorAll('.error');
@@ -40,6 +54,7 @@ const Gameboard = function() {
 
   let currentSign = 'X';
   let currentPlayer;
+  const playMode = ['2 Players', 'Random Mode', 'AI Mode'];
   
   makeUnavailableColor(RESET_BUTTON);
 
@@ -149,6 +164,11 @@ const Gameboard = function() {
       DISPLAY.innerText = `${currentPlayer}'s Move!`;
     }
   }
+
+  function putSignInRandomPlace() {
+    let id = Math.floor(Math.random() * 9);
+    putSign(id);
+  };
 
   RESET_BUTTON.onclick  = function() {
     if (INPUT_PLAYERS_FORM.className !== 'hidden') return;

@@ -30,6 +30,32 @@ h1 {
   display: none;
 }
 
+.playMode {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  
+}
+
+.playMode label {
+  border: 1px solid gray;
+  text-align: center;
+  padding: 5px 12px;
+}
+
+.playMode label:not(.playMode label:last-child) {
+  border-right: none;
+}
+
+.playMode input[type="radio"] {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.playMode label:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
 .userInput {
   width: 100%;
   display: flex;
