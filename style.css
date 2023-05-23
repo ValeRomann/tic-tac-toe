@@ -30,17 +30,16 @@ h1 {
   display: none;
 }
 
-.radioContainer {
+.playMode {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  
+  width: 100%;  
 }
 
 .playMode label {
   border: 1px solid gray;
   text-align: center;
-  padding: 5px 12px;
+  padding: 5px 11px;
 }
 
 .playMode label:not(.playMode label:last-child) {
