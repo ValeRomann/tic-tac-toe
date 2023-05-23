@@ -2,6 +2,12 @@ const Gameboard = function() {
   const INPUT_PLAYERS_FORM = document.getElementById('inputForm');
   const PLAY_MODE_LABELS = document.querySelectorAll('.playMode label');
   const PLAY_MODE_RADIOS = document.querySelectorAll('.playMode input[type="radio"]');
+  const INPUT_PLAYER1 = document.getElementById('playerName1');
+  const INPUT_PLAYER2 = document.getElementById('playerName2');
+  const ERROR_MESSAGE = document.querySelectorAll('.error');
+  const GAMEPAD = document.getElementById('gamePad');
+  GAMEPAD.style.backgroundColor = 'lightgray';
+
 
   const stylePlayModeRadio = function() {
     for (let i = 0; i < PLAY_MODE_LABELS.length; i++) {
@@ -13,13 +19,6 @@ const Gameboard = function() {
       };
     }
   }();
-  
-  const INPUT_PLAYER1 = document.getElementById('playerName1');
-  const INPUT_PLAYER2 = document.getElementById('playerName2');
-  const ERROR_MESSAGE = document.querySelectorAll('.error');
-  const GAMEPAD = document.getElementById('gamePad');
-  GAMEPAD.style.backgroundColor = 'lightgray';
-
 
   INPUT_PLAYER1.oninput = function (e) {
     showErrorMessage(e.target.value.length, ERROR_MESSAGE[0]);    
