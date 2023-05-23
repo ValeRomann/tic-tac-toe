@@ -13,7 +13,14 @@
   <div id="gameBoard">    
     <div id="controlPanel">
       <form id="inputForm">
+        <div class="userMode">
+          <h3>Select Play Mode:</h3>
+          <label for="twoPlayers"><input type="radio" name="playMode" id="twoPlayers" value="twoPlayers">2 Players</label>
+          <label for="randomMode"><input type="radio" name="playMode" id="randomMode" value="randomMode">Random Mode</label>
+          <label for="ai"><input type="radio" name="playMode" id="ai" value="ai">AI Mode</label>
+        </div>
         <div class="userInput">
+          <h3>Input Names:</h2>
           <label for="playerName1">Player 1:</label>
           <input type="text" name=playerName1" id="playerName1" required>
           <span class="error"></span>
