@@ -22,7 +22,7 @@ h1 {
   min-width: 300px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
   align-items: flex-start;
 }
 
@@ -30,7 +30,7 @@ h1 {
   display: none;
 }
 
-.playMode {
+.radioContainer {
   display: flex;
   justify-content: space-between;
   width: 100%;
