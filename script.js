@@ -9,8 +9,9 @@ const Gameboard = function() {
   GAMEPAD.style.backgroundColor = 'lightgray';
 
 
-  const stylePlayModeRadio = function() {
+  const stylePlayModeRadio = function() {    
     for (let i = 0; i < PLAY_MODE_LABELS.length; i++) {
+      if (PLAY_MODE_RADIOS[i].checked) PLAY_MODE_LABELS[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
       PLAY_MODE_LABELS[i].onclick = function() {
         PLAY_MODE_LABELS[i].style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
         for (let j = 0; j < PLAY_MODE_RADIOS.length; j++) {
