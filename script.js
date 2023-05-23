@@ -123,7 +123,7 @@ const Gameboard = function() {
         let item = document.createElement('div');
         item.id = [i];
         item.innerText = arr[i];
-        item.onclick = putSign.bind(null, item.id);
+        item.onclick = () => putSign(item.id);       
         BOARD.appendChild(item);
       }
     }(gameBoardArr);  
