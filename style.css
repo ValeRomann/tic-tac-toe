@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   font-family: Arial, Helvetica, sans-serif;
+  user-select: none;
 }
 
 body {
@@ -27,7 +28,8 @@ h1 {
 }
 
 #inputForm.hidden,
-.nameInputs.hidden {
+.nameInputs.hidden,
+.chooseSign.hidden {
   display: none;
 }
 
@@ -43,20 +45,38 @@ h1 {
   padding: 5px 11px;
 }
 
-.playMode label:not(.playMode label:last-child) {
+.playMode label:not(.playMode label:last-child),
+.chooseSign label:not(.chooseSign label:last-child) {
   border-right: none;
 }
 
-.playMode input[type="radio"] {
+.playMode input[type="radio"],
+.chooseSign input[type="radio"] {
   -webkit-appearance: none;
   appearance: none;
 }
 
-.playMode label:hover {
+.playMode label:hover,
+.chooseSign label:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
+.chooseSign {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
 
+.chooseSign > div {
+  display: flex;
+  width: 100%;  
+}
+
+.chooseSign label {
+  border: 1px solid gray;
+  text-align: center;
+  padding: 5px 11px;
+}
 
 .userInput {
   width: 100%;
@@ -95,7 +115,11 @@ h1 {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
   gap: 3px;
-  background-color: rgb(146, 146, 146);
+  background-color: lightgray;
+}
+
+#gamePad.activated {
+  background-color: rgb(146, 146, 146);;
 }
 
 #gamePad > div {
@@ -112,19 +136,18 @@ h1 {
   align-self: end;
 }
 
-#buttonsPanel button, #submitPlayerName {
-  /* width: 50%; */
+#buttonsPanel button, #submitPlayerName, #submitSIgnChoise {
   padding: 5px;
   background-color: white;
   border: 1px solid lightgray;
   color: black;
 }
 
-#buttonsPanel button:hover, #submitPlayerName:hover {
+#buttonsPanel button:hover, #submitPlayerName:hover, #submitSIgnChoise:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
 
-#buttonsPanel button:active, #submitPlayerName:active {
+#buttonsPanel button:active, #submitPlayerName:active, #submitSIgnChoise:active {
   background-color: rgba(0, 0, 0, 0.1);
 }
 

@@ -2,31 +2,34 @@ const Gameboard = function() {
   const INPUT_PLAYERS_FORM = document.getElementById('inputForm');
   const PLAY_MODE_LABELS = document.querySelectorAll('.playMode label');
   const PLAY_MODE_RADIOS = document.querySelectorAll('.playMode input[type="radio"]');
+  const SIGN_CHOISE_LABELS = document.querySelectorAll('.chooseSign label');
+  const SIGN_CHOISE_RADIOS = document.querySelectorAll('.chooseSign input[type="radio"]');
   const GAMEPAD = document.getElementById('gamePad');
-  GAMEPAD.style.backgroundColor = 'lightgray'; 
-  let currentMode;
-  let currentSign = 'X';
+  let currentSign = 'X';  
+  let player1 = 'X';
+  let player2 = 'O';
   let currentPlayer;
 
-  const stylePlayModeRadio = function() {    
-    for (let i = 0; i < PLAY_MODE_LABELS.length; i++) {
-      if (PLAY_MODE_RADIOS[i].checked) PLAY_MODE_LABELS[i].className = 'active';
-      PLAY_MODE_LABELS[i].onclick = function() {
-        PLAY_MODE_LABELS[i].className = 'active';
-        for (let j = 0; j < PLAY_MODE_RADIOS.length; j++) {
-          if (!PLAY_MODE_RADIOS[j].checked) PLAY_MODE_LABELS[j].className = 'normal';
+  function styleChoiseRadios(labels, radios) {
+    for (let i = 0; i < labels.length; i++) {
+      if (radios[i].checked) labels[i].className = 'active';
+      labels[i].onclick = function() {
+        labels[i].className = 'active';
+        for (let j = 0; j < radios.length; j++) {
+          if (!radios[j].checked) labels[j].className = 'normal';
         }
       };
     }
-  }();
+  }
+
+  styleChoiseRadios(PLAY_MODE_LABELS, PLAY_MODE_RADIOS);
+  styleChoiseRadios(SIGN_CHOISE_LABELS, SIGN_CHOISE_RADIOS);
 
   const runTwoPlayersMode = function() {
     const SUBMIT_PLAYERS_NAME = document.querySelector('#submitPlayerName');
     const INPUT_PLAYER1 = document.getElementById('playerName1');
     const INPUT_PLAYER2 = document.getElementById('playerName2');
     const ERROR_MESSAGE = document.querySelectorAll('.error');
-    let player1;
-    let player2;
 
     INPUT_PLAYER1.oninput = function (e) {
       showErrorMessage(e.target.value.length, ERROR_MESSAGE[0]);    
@@ -49,14 +52,6 @@ const Gameboard = function() {
       return true;
     }
 
-    function getPlayer1Name() {
-      return player1;
-    }
-
-    function getPlayer2Name() {
-      return player2;
-    }
-
     SUBMIT_PLAYERS_NAME.onclick = function(e) {
       e.preventDefault();
       if (INPUT_PLAYER1.value.length < 6 ||
@@ -66,53 +61,71 @@ const Gameboard = function() {
         showErrorMessage(INPUT_PLAYER2.value.length, ERROR_MESSAGE[1]);
         return;
       }
-      GAMEPAD.style.backgroundColor = 'rgb(146, 146, 146)';
+      GAMEPAD.className = 'activated';
       makeAvailableColor(RESET_BUTTON);
-      player1 = document.getElementById('playerName1').value;
-      player2 = document.getElementById('playerName2').value;
+      player1 = INPUT_PLAYER1.value;
+      player2 = INPUT_PLAYER2.value;
       currentPlayer = player1;
       DISPLAY.innerText = `${currentPlayer}'s Move!`;
       INPUT_PLAYERS_FORM.className = 'hidden';
+      document.getElementById('playerName1').value = '';
+      document.getElementById('playerName2').value = '';
     };
-
-    return {
-      getPlayer1Name,
-      getPlayer2Name
-    }
   };
 
   const runRandomMode = function() {
+    const SUBMIT_SIGN_CHOISE = document.querySelector('#submitSIgnChoise');
 
+
+
+    SUBMIT_SIGN_CHOISE.onclick = function(e) {
+      e.preventDefault();
+      GAMEPAD.className = 'activated';
+      makeAvailableColor(RESET_BUTTON);
+      currentPlayer = player1;
+      DISPLAY.innerText = `${currentPlayer}'s Move!`;
+      INPUT_PLAYERS_FORM.className = 'hidden';
+    }
   };
 
   const runAIMode = function() {
+    const SUBMIT_SIGN_CHOISE = document.querySelector('#submitSIgnChoise');
 
+
+
+    SUBMIT_SIGN_CHOISE.onclick = function(e) {
+      e.preventDefault();
+      GAMEPAD.className = 'activated';
+      makeAvailableColor(RESET_BUTTON);
+      currentPlayer = player1;
+      DISPLAY.innerText = `${currentPlayer}'s Move!`;
+      INPUT_PLAYERS_FORM.className = 'hidden';
+    }
   }
-
 
   const chooseMode = function() {
       if (PLAY_MODE_RADIOS[0].checked) {
         document.querySelector('.nameInputs').className = 'nameInputs';
-        currentMode = runTwoPlayersMode();
-        return {
-          currentMode
-        }
+        document.querySelector('.chooseSign').className += ' hidden';
+        runTwoPlayersMode();
       }
       if (PLAY_MODE_RADIOS[1].checked) {
+        document.querySelector('.chooseSign').className = 'chooseSign';
         document.querySelector('.nameInputs').className += ' hidden';
         runRandomMode();
         return;
       }
       if (PLAY_MODE_RADIOS[2].checked) {
+        document.querySelector('.chooseSign').className = 'chooseSign';
         document.querySelector('.nameInputs').className += ' hidden';
         runAIMode();
         return;
       }
   };
-  
-  PLAY_MODE_RADIOS[0].onclick = chooseMode;
-  PLAY_MODE_RADIOS[1].onclick = chooseMode;
-  PLAY_MODE_RADIOS[2].onclick = chooseMode;
+
+  for (let i = 0; i < PLAY_MODE_RADIOS.length; i++) {
+    PLAY_MODE_RADIOS[i].onclick = chooseMode
+  }
   
   const DISPLAY = document.querySelector('#display');
   DISPLAY.innerText = 'Welcome!';
@@ -157,10 +170,10 @@ const Gameboard = function() {
   function changeCurrentSign() {
     if (currentSign === 'X') {
       currentSign = 'O';
-      currentPlayer = currentMode.getPlayer2Name();
+      currentPlayer = player2;
     } else {
       currentSign = 'X';
-      currentPlayer = currentMode.getPlayer1Name();
+      currentPlayer = player1;
     }
   }
 
@@ -219,18 +232,14 @@ const Gameboard = function() {
     if (INPUT_PLAYERS_FORM.className !== 'hidden') return;
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
-    currentPlayer = currentMode.getPlayer1Name();
+    currentPlayer = player1;
     DISPLAY.innerText = `${currentPlayer}'s Move!`;
     renderBoard();
   }
 
   NEW_GAME_BUTTON.onclick = function() {
     makeUnavailableColor(RESET_BUTTON);
-    player1 = '';
-    player2 = '';
-    document.getElementById('playerName1').value = '';
-    document.getElementById('playerName2').value = '';
-    GAMEPAD.style.backgroundColor = 'lightgray';
+    GAMEPAD.className = '';
     INPUT_PLAYERS_FORM.className = '';
     gameBoardArr =  ['','','','','','','','',''];
     currentSign = 'X';
